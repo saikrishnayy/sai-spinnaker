@@ -1,0 +1,19 @@
+resources:
+- SpinnakerService.yml
+
+# Apply the patches top down order
+# apiVersion: kustomize.config.k8s.io/v1beta1
+# kind: Kustomization
+# patches:
+# - path: config-patch.yml
+# - path: profiles-patch.yml
+# - path: files-patch.yml
+# - path: service-settings-patch.yml
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+patches:
+- path: config-patch.yml
+- path: profiles-patch.yml
+- path: files-patch.yml
+- path: service-settings-patch.yml

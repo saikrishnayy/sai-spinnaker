@@ -1,0 +1,60 @@
+apiVersion: spinnaker.armory.io/v1alpha2
+kind: SpinnakerService
+metadata:
+  name: spinnaker
+#  namespace: sai-spin
+spec:
+  # spec.spinnakerConfig - This section is how to specify configuration spinnaker
+  spinnakerConfig:
+    # spec.spinnakerConfig.config - This section contains the contents of a deployment found in a halconfig .deploymentConfigurations[0]
+    config:
+      version: 2.27.4 # the version of Spinnaker to be deployed
+      security:
+        apiSecurity:
+          overrideBaseUrl: https://sai-spin-kust-gate.tse-armory.io # Specify your DNS name for Gate with https scheme
+        uiSecurity:
+          overrideBaseUrl: https://sai-spin-kust-deck.tse-armory.io # Specify your DNS name for Deck with https scheme
+      artifacts:
+        github:
+          enabled: true
+          accounts:
+          - name: saikrishnayy
+            token: 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
+      persistentStorage:
+        persistentStoreType: s3
+        s3:
+          bucket: sai-armory-spinnaker
+          #          accessKeyId: ASIA3ZQRIGO2C5KP4ZUH
+          #          secretAccessKey: 9WfcRQIlksTFHTukW4PkiiBuPl+EE1bWqoNO0xtn
+          region: us-east-2
+          rootFolder: front50
+
+  # spec.expose - This section defines how Spinnaker should be publicly exposed
+  expose:
+    type: service # Kubernetes LoadBalancer type (service/ingress), note: only "service" is supported for now
+    service:
+      #type: LoadBalancer
+      type: NodePort
+  kustomize:
+    deck:
+      service:
+        patches:
+        - |
+          spec:
+            type: NodePort
+            ports:
+            - name: http
+              port: 9000
+              targetPort: 9000
+              nodePort: 30101
+    gate:
+      service:
+        patches:
+        - |
+          spec:
+            type: NodePort
+            ports:
+            - name: http
+              port: 8084
+              targetPort: 8084
+              nodePort: 30201
