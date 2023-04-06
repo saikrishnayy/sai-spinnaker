@@ -21,7 +21,7 @@
 #}
 
 {
-    "application": "module-dinghytest",
+    "application": "module_dinghy_test",
     "pipelines": [
         {
             "application": "eks-dinghytest",
