@@ -1,0 +1,37 @@
+#{
+#    "application": "eks-dinghytest",
+#    "pipelines": [
+#        {
+#            "application": "eks-dinghytest",
+#            "name": "DinghyValidation-Tests",
+#            "keepWaitingPipelines": false,
+#            "limitConcurrent": true,
+#            "stages": [
+#                {
+#                    "name": "Wait",
+#                    "refId": "1",
+#                    "requisiteStageRefIds": [],
+#                    "type": "wait",
+#                    "waitTime": 30
+#                }
+#            ],
+#            "triggers": []
+#        }
+#    ]
+#}
+
+{
+    "application": "module-dinghytest",
+    "pipelines": [
+        {
+            "application": "eks-dinghytest",
+            "keepWaitingPipelines": false,
+            "limitConcurrent": true,
+            "name": "dinghymodule-tests",
+            "stages": [
+                {{ module "/dinghy-modules/wait.stage.module" }}
+            ],
+            "triggers": []
+        }
+    ]
+}
