@@ -57,18 +57,18 @@ spec:
       #   - We currently only support string files
       #   - NOTE: Kubernetes has a manifest size limitation of 1MB
       #files:
-  #      profiles__rosco__packer__example-packer-config.json: |
-  #        {
-  #          "packerSetting": "someValue"
-  #        }
-  #      profiles__rosco__packer__my_custom_script.sh: |
-  #        #!/bin/bash -e
-  #        echo "hello world!"
-  # spec.expose - This section defines how Spinnaker should be publicly exposed
-  expose:
-    type: service # Kubernetes LoadBalancer type (service/ingress), note: only "service" is supported for now
-    service:
-      type: LoadBalancer
+      #      profiles__rosco__packer__example-packer-config.json: |
+      #        {
+      #          "packerSetting": "someValue"
+      #        }
+      #      profiles__rosco__packer__my_custom_script.sh: |
+      #        #!/bin/bash -e
+      #        echo "hello world!"
+      # spec.expose - This section defines how Spinnaker should be publicly exposed
+      # expose:
+      #   type: service # Kubernetes LoadBalancer type (service/ingress), note: only "service" is supported for now
+      #   service:
+      #     type: LoadBalancer
       # annotations to be set on Kubernetes LoadBalancer type
       # they will only apply to spin-gate, spin-gate-x509, or spin-deck
       annotations:

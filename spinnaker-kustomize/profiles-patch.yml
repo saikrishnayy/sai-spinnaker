@@ -5,8 +5,14 @@ metadata:
 spec:
   # spec.spinnakerConfig - This section is how to specify configuration spinnaker
   spinnakerConfig:
-    # spec.spinnakerConfig.profiles - This section contains the YAML of each service's profile
     profiles:
+      dinghy:
+        repoConfig:
+        - branch: main
+          provider: github
+          repo: sai-spinnaker
+          # spec.spinnakerConfig.profiles - This section contains the YAML of each service's profile
+      # profiles:
       clouddriver: {} # is the contents of ~/.hal/default/profiles/clouddriver.yml
       # deck has a special key "settings-local.js" for the contents of settings-local.js
       deck:

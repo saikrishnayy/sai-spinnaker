@@ -6,9 +6,68 @@ metadata:
 spec:
   # spec.spinnakerConfig - This section is how to specify configuration spinnaker
   spinnakerConfig:
+    profiles:
+      clouddriver:
+        enabled: true
+        logging:
+          level:
+            com.netflix.spinnaker.clouddriver: DEBUG
+            redis:
+            cache:
+              enabled: false
+            enabled: false
+            scheduler:
+              enabled: false
+            taskRepository:
+              enabled: false
+          sql:
+            cache:
+              enabled: true
+              readBatchSize: 500
+              writeBatchSize: 300
+        serviceLimits:
+          cloudProviderOverrides:
+            aws:
+              rateLimit: 2
+            kubernetes:
+              rateLimit: 2
     # spec.spinnakerConfig.config - This section contains the contents of a deployment found in a halconfig .deploymentConfigurations[0]
     config:
+      armory:
+        dinghy:
+          enabled: true
+          githubEndpoint: https://api.github.com
+          githubToken: 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
+          templateOrg: saikrishnayy
+          templateRepo: sai-spinnaker
+          dinghyFilename: dinghyfile
+          autoLockPipelines: true
+          notifiers:
+            slack:
+              enabled: false
       version: 2.27.4 # the version of Spinnaker to be deployed
+      providers:
+        kubernetes:
+          accounts:
+          - cacheThreads: 1
+            cachingPolicies: []
+            checkPermissionsOnStartup: true
+            configureImagePullSecrets: true
+            customResources: []
+            dockerRegistries: []
+            kinds: []
+            kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret2
+            liveManifestCalls: false
+            name: sai-kubernetes
+            namespaces: []
+            oAuthScopes: []
+            omitKinds: []
+            omitNamespaces: []
+            onlySpinnakerManaged: false
+            permissions: {}
+            providerVersion: V2
+          enabled: true
+          primaryAccount: sai-kubernetes
       security:
         apiSecurity:
           overrideBaseUrl: https://sai-spin-kust-gate.tse-armory.io # Specify your DNS name for Gate with https scheme
@@ -18,8 +77,74 @@ spec:
         github:
           enabled: true
           accounts:
-          - name: saikrishnayy
-            token: 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
+          - name: AT_Github
+            token: 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
+            #enabled: true
+        gitrepo:
+          accounts:
+          - name: AT_GitRepo
+            token: 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
+      deploymentEnvironment:
+        customSizing:
+          spin-clouddriver:
+            limits:
+              cpu: 200m
+              memory: 2Gi
+            replicas: 1
+            requests:
+              cpu: 50m
+              memory: 512Mi
+          spin-deck:
+            limits:
+              cpu: 256m
+              memory: 256Mi
+            replicas: 1
+            requests:
+              cpu: 50m
+              memory: 256Mi
+          spin-echo:
+            limits:
+              cpu: 200m
+              memory: 0.5Gi
+            replicas: 1
+            requests:
+              cpu: 50m
+              memory: 0.5Gi
+          spin-front50:
+            limits:
+              cpu: 100m
+              memory: 0.5Gi
+            replicas: 1
+            requests:
+              cpu: 50m
+              memory: 0.5Gi
+          spin-gate:
+            limits:
+              cpu: 100m
+              memory: 0.5Gi
+            replicas: 1
+            requests:
+              cpu: 50m
+              memory: 0.5Gi
+          spin-orca:
+            limits:
+              cpu: 200m
+              memory: 1Gi
+            replicas: 1
+            requests:
+              cpu: 50m
+              memory: 1Gi
+          spin-rosco:
+            limits:
+              cpu: 100m
+              memory: 0.5Gi
+            replicas: 1
+            requests:
+              cpu: 50m
+              memory: 0.5Gi
+      features:
+        artifacts: true
+        pipelineTemplates: true
       persistentStorage:
         persistentStoreType: s3
         s3:
@@ -28,6 +153,7 @@ spec:
           #          secretAccessKey: 9WfcRQIlksTFHTukW4PkiiBuPl+EE1bWqoNO0xtn
           region: us-east-2
           rootFolder: front50
+
 
   # spec.expose - This section defines how Spinnaker should be publicly exposed
   expose:
@@ -58,3 +184,4 @@ spec:
               port: 8084
               targetPort: 8084
               nodePort: 30201
+
