@@ -1,0 +1,21 @@
+{
+  "application": "sai-dinghy-app",
+  "globals": {
+      "waitTime": "42",
+      "name": "sai-dinghy-app"
+  },
+  "pipelines": [
+    {
+      "application": "dinghy-app-pipeline",
+      "name": "Made By Armory Pipeline Templates",
+      "stages": [
+        {{ 
+           module "wait.stage.module"
+           "name" "VaribaleUpdated-sai-dinghy-app"
+           "waitTime" 45
+        }}
+      ]
+    }
+  ]
+}
+
