@@ -34,6 +34,8 @@ spec:
     # spec.spinnakerConfig.config - This section contains the contents of a deployment found in a halconfig .deploymentConfigurations[0]
     config:
       armory:
+        terraform:
+          enabled: true
         dinghy:
           enabled: true
           githubEndpoint: https://api.github.com

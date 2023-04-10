@@ -6,6 +6,18 @@ spec:
   # spec.spinnakerConfig - This section is how to specify configuration spinnaker
   spinnakerConfig:
     profiles:
+      terraformer:
+        redis:
+          baseUrl: "redis://spin-redis:6379"
+          #password: "password"
+        profiles:
+        - name: dev-team
+          variables:
+          - kind: aws
+            options:
+              assumeRole: arn:aws:iam::810711266228:role/aws-spin-support-managedrole
+              name: AWS_REGION
+              value: eu-west-1
       dinghy:
         repoConfig:
         - branch: main
@@ -21,6 +33,7 @@ spec:
         settings-local.js: |
           window.spinnakerSettings.feature.kustomizeEnabled = true;
           window.spinnakerSettings.feature.artifactsRewrite = true;
+          window.spinnakerSettings.feature.terraform = true;
       echo: {} # is the contents of ~/.hal/default/profiles/echo.yml
       fiat: {} # is the contents of ~/.hal/default/profiles/fiat.yml
       front50: {} # is the contents of ~/.hal/default/profiles/front50.yml
